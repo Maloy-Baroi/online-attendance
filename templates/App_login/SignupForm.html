@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load crispy_forms_filters %}
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Sign up</title>
+    <style>
+        .signup_form {
+            padding: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 0 10px #818181;
+        }
+
+        .signup_form form {
+            padding: 20px 20px 0 20px;
+        }
+
+        .account-have {
+            padding: 0 20px 0 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row p-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 signup_form">
+            <form method="post" class="form-group" enctype="multipart/form-data">
+                {% csrf_token %}
+                <legend>Signup Form</legend>
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                    <p><input type="checkbox" onclick="passToText()"> see password</p>
+                    <input type="submit" class="btn btn-outline-primary" value="Submit">
+                </fieldset>
+            </form>
+            <div class="text-info mt-2 account-have">I have an account
+                <a href="{% url 'App_login:login' %}">Login</a>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+<!--------- js -------->
+<script type="text/javascript">
+    let pass1 = document.getElementById('id_password1');
+    let pass2 = document.getElementById('id_password2');
+
+    function passToText() {
+        if (pass1.type === 'password') {
+            pass1.type = 'text';
+            pass2.type = 'text';
+        } else {
+            pass1.type = 'password';
+            pass2.type = 'password';
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+        crossorigin="anonymous"></script>
+</body>
+</html>

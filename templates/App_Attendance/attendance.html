@@ -1,0 +1,78 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/unselectable.css' %}">
+{% block body %}
+    <div class="container">
+        {% if messages %}
+            <div class="messages text-center">
+                {% for message in messages %}
+                    <h3 class="text-danger">{{ message }}</h3>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if user.teacher %}
+            <!-- Button trigger modal -->
+            <div style="text-align: center" class="mt-2">
+                <input type="text" style="width: 50%; height: 50px; text-align: center" class="disabled"
+                       data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Upload Attendance
+                </button>
+            </div>
+            <hr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Routine Upload Form</h5>
+                        </div>
+                        <form method="post" class="form-group" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                {% csrf_token %}
+                                <legend></legend>
+                                <fieldset class="form-group">
+                                    {{ form|crispy }}
+                                </fieldset>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-outline-primary mt-2" value="Submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">ID</th>
+                <th scope="col">Attendance</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if No_student_data %}
+                <h3>{{ No_student_data }}</h3>
+            {% else %}
+                {% for attend in attendance_details %}
+                    <tr>
+                        <th scope="row">{{ attend.submission_date }}</th>
+                        <td>{{ attend.student_id }}</td>
+                        {% if attend.presence %}
+                            <td>1</td>
+                        {% else %}
+                            <td>0</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript" src="{% static 'js/unselectable.js' %}"></script>
+{% endblock %}

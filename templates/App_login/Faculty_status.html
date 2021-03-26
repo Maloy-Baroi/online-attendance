@@ -1,0 +1,29 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block body %}
+    <div class="row">
+        {% for teacher in teachers %}
+            <div>
+                <div class="col-sm-3 mb-2">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ teacher.teacher_user.profile_picture.url }}" class="card-img-top"
+                             alt="profile-picture"
+                             style="height: 18rem; width: 18rem; padding-inline: 20px;">
+                        <div class="card-body">
+                            <h6 class="card-title text-danger">
+                                {{ teacher.teacher_user.first_name }} {{ teacher.teacher_user.last_name }}
+                            </h6>
+                            <div class="card-text">
+                                <p><b>Designation:</b> {{ teacher.Designation }}</p>
+                                <p><b>Subject:</b> {{ teacher.Major_subject_type }}</p>
+                                <p><b>Department:</b> {{ teacher.dept_name }}</p>
+                            </div>
+                            <a href="#" class="btn btn-primary">Go More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
